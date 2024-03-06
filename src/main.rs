@@ -1,5 +1,5 @@
 use clap::Parser;
-use turtle::parse_command;
+use turtle::{interactive_shell, parse_command};
 
 /// A simple cross-platform shell
 #[derive(Parser, Debug)]
@@ -19,7 +19,7 @@ fn main() {
     if args.command.is_some() {
         parse_command(&args.command.unwrap());
     } else if args.input.is_empty() {
-        println!("No input file entering interactive mode.");
+        interactive_shell();
     } else {
         println!("input file: {:?}", args.input);
     }

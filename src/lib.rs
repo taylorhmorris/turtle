@@ -1,8 +1,11 @@
 mod builtins;
+use std::io::Write;
+
 use builtins::{ls, pwd};
 
 pub fn run_builtin_command(command: &str, args: Vec<&str>) {
     match command {
+        "" => {}
         "pwd" => {
             pwd();
         }
@@ -11,6 +14,9 @@ pub fn run_builtin_command(command: &str, args: Vec<&str>) {
         }
         "echo" => {
             builtins::echo(args);
+        }
+        "exit" => {
+            std::process::exit(0);
         }
         _ => {
             println!("unknown command:");
@@ -28,6 +34,29 @@ pub fn parse_command(command: &str) {
         }
         None => {
             run_builtin_command(command, vec![]);
+        }
+    }
+}
+
+pub fn interactive_shell() {
+    loop {
+        print!("> ");
+        let mut input = String::new();
+        match std::io::stdout().flush() {
+            Ok(_) => {}
+            Err(_) => {
+                eprintln!("error flushing stdout");
+                continue;
+            }
+        }
+        match std::io::stdin().read_line(&mut input) {
+            Ok(_) => {
+                parse_command(input.trim());
+            }
+            Err(_) => {
+                eprintln!("error reading input");
+                continue;
+            }
         }
     }
 }

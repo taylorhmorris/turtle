@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - builtins pwd, ls, echo
 - interactive shell
 - exit
+- run external programs
 
 [unreleased]: https://github.com/taylorhmorris/turtle/compare/v0.0.1...HEAD
 [0.0.1]: https://github.com/taylorhmorris/turtle/compare/v0.0.0...v0.0.1

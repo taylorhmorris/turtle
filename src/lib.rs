@@ -19,9 +19,15 @@ pub fn run_builtin_command(command: &str, args: Vec<&str>) {
             std::process::exit(0);
         }
         _ => {
-            println!("unknown command:");
-            println!("command: {:?}", command);
-            println!("args: {:?}", args);
+            let child = match std::process::Command::new(command).args(args).spawn() {
+                Ok(output) => output,
+                Err(e) => {
+                    eprintln!("error: {}", e);
+                    return;
+                }
+            };
+            let output = child.wait_with_output().expect("failed to wait on child");
+            std::io::stdout().write_all(&output.stdout).unwrap();
         }
     }
 }

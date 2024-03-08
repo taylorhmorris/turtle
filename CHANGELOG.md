@@ -8,9 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- builtins pwd, ls, echo
+- builtins pwd, ls, echo, exit, cat
 - interactive shell
-- exit
 - run external programs
 
 [unreleased]: https://github.com/taylorhmorris/turtle/compare/v0.0.1...HEAD

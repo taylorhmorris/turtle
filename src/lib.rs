@@ -6,6 +6,13 @@ use builtins::{ls, pwd};
 pub fn run_builtin_command(command: &str, args: Vec<&str>) {
     match command {
         "" => {}
+        "cd" => {
+            if args.is_empty() {
+                builtins::cd("~");
+            } else {
+                builtins::cd(args[0]);
+            }
+        }
         "cat" => {
             builtins::cat(args);
         }

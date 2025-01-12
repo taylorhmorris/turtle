@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- builtins pwd, ls, echo, exit, cat
+- builtins pwd, ls, echo, exit, cat, cd
 - interactive shell
 - run external programs
 

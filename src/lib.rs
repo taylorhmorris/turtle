@@ -1,8 +1,6 @@
 mod builtins;
 use std::io::Write;
 
-use builtins::{ls, pwd};
-
 pub fn run_builtin_command(command: &str, args: Vec<&str>) {
     match command {
         "" => {}
@@ -17,10 +15,10 @@ pub fn run_builtin_command(command: &str, args: Vec<&str>) {
             builtins::cat(args);
         }
         "pwd" => {
-            pwd();
+            builtins::pwd();
         }
         "ls" => {
-            ls();
+            builtins::ls();
         }
         "echo" => {
             builtins::echo(args);

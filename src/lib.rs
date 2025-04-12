@@ -1,4 +1,6 @@
 mod builtins;
+use rustyline::error::ReadlineError;
+use rustyline::{DefaultEditor, Result};
 use std::io::Write;
 
 pub fn run_builtin_command(command: &str, args: Vec<&str>) {
@@ -52,25 +54,33 @@ pub fn parse_command(command: &str) {
     }
 }
 
-pub fn interactive_shell() {
+pub fn interactive_shell() -> Result<()> {
+    let mut rl = DefaultEditor::new()?;
+    #[cfg(feature = "with-file-history")]
+    if rl.load_history("history.txt").is_err() {
+        eprintln!("No previous history.");
+    }
     loop {
-        print!("> ");
-        let mut input = String::new();
-        match std::io::stdout().flush() {
-            Ok(_) => {}
-            Err(_) => {
-                eprintln!("error flushing stdout");
+        let readline = rl.readline("turtle> ");
+        match readline {
+            Ok(line) => {
+                rl.add_history_entry(line.as_str())?;
+                parse_command(line.trim());
+            }
+            Err(ReadlineError::Interrupted) => {
+                println!("CTRL-C");
                 continue;
             }
-        }
-        match std::io::stdin().read_line(&mut input) {
-            Ok(_) => {
-                parse_command(input.trim());
+            Err(ReadlineError::Eof) => {
+                println!("CTRL-D");
+                break;
             }
-            Err(_) => {
-                eprintln!("error reading input");
-                continue;
+            Err(err) => {
+                eprintln!("Error: {}", err)
             }
         }
     }
+    #[cfg(feature = "with-file-history")]
+    rl.save_history("history.txt")?;
+    Ok(())
 }

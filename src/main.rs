@@ -19,7 +19,7 @@ fn main() {
     if args.command.is_some() {
         parse_command(&args.command.unwrap());
     } else if args.input.is_empty() {
-        interactive_shell();
+        let _ = interactive_shell();
     } else {
         println!("input file: {:?}", args.input);
     }

@@ -7,3 +7,8 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.5.1", features = ["derive"] }
+rustyline = { version = "15.0.0" }
+
+[features]
+default = ["with-file-history"]
+with-file-history = []
